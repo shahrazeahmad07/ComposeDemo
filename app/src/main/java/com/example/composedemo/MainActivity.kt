@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeDemoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ProfilePage(modifier = Modifier.padding(innerPadding))
+                    ProfilePage(Modifier.padding(innerPadding))
                 }
             }
         }
