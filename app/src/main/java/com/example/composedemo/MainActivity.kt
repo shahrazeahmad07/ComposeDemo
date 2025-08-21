@@ -67,6 +67,7 @@ fun InnerMyApp(innerPadding: PaddingValues) {
 
         Button(
             onClick = {
+                Log.i("TAG", "button click called")
                 count.intValue++
             }
         ) {
