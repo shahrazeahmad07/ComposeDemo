@@ -54,5 +54,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // constraint layout compose
+    implementation(libs.androidx.constraintlayout.compose)
+
+    // sdp library
     implementation(libs.sdp.android)
+
 }
