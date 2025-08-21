@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,8 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.composedemo.ui.theme.ComposeDemoTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(showSystemUi = true)
 @Composable
 fun MyApp() {
     ComposeDemoTheme {
@@ -43,20 +46,16 @@ fun MyApp() {
 @Composable
 fun InnerMyApp(innerPadding: PaddingValues) {
 
-    ConstraintLayout(
-        modifier = Modifier.padding(innerPadding)
+    Column(
+        modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val (box, button, text) = createRefs()
 
-        Box(
-            modifier = Modifier.constrainAs(box) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-        ) {
+        Box {
 
-            Log.i("TAG", "box: called")
+            Log.i("TAG", "hello world box called")
 
             Text(
                 text = "Hello World"
@@ -64,20 +63,11 @@ fun InnerMyApp(innerPadding: PaddingValues) {
 
         }
 
-        Log.i("TAG", "InnerMyApp: lambda called")
-
         val count = remember { mutableIntStateOf(0) }
 
         Button(
             onClick = {
                 count.intValue++
-            },
-            modifier = Modifier.constrainAs(button) {
-
-                top.linkTo(box.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-
             }
         ) {
 
@@ -87,27 +77,16 @@ fun InnerMyApp(innerPadding: PaddingValues) {
 
         }
 
-        ShowCountText(
-            modifier = Modifier.constrainAs(text) {
-                top.linkTo(button.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            count = count.intValue
-        )
+        Box {
+
+            Log.i("TAG", "state dependent count text box called")
+
+            Text(
+                text = "The count is: ${count.intValue}"
+            )
+
+        }
 
     }
-
-}
-
-@Composable
-fun ShowCountText(modifier: Modifier = Modifier, count: Int) {
-
-    Log.i("TAG", "show text called")
-
-    Text(
-        text = "The count is: $count",
-        modifier = modifier
-    )
 
 }
